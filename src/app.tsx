@@ -24,10 +24,27 @@ export async function getInitialState(): Promise<{
 }> {
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser({
-        skipErrorHandler: true,
-      });
-      return msg.data;
+      // const msg = await queryCurrentUser({
+      //   skipErrorHandler: true,
+      // });
+      const res = await queryCurrentUser();
+      const d = res.data;
+      return {
+        name: d.name,
+        avatar: `https://cube.newlifex.com${d.avatar}`,
+        userid: d.id,
+        email: d.mail,
+        signature: d.remark,
+        title: d.displayName,
+        group: d.roleName,
+        // tags?: d.,
+        notifyCount: 0,
+        unreadCount: 0,
+        country: '',
+        access: '',
+        // address?: d,
+        phone: d.mobile,
+      } as unknown as API.CurrentUser;
     } catch (error) {
       history.push(loginPath);
     }
@@ -37,6 +54,7 @@ export async function getInitialState(): Promise<{
   const { location } = history;
   if (location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
+    console.log(currentUser);
     return {
       fetchUserInfo,
       currentUser,

@@ -19,8 +19,10 @@ import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
 import Settings from '../../../../config/defaultSettings';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { flushSync } from 'react-dom';
+import { useLocation } from '@umijs/max';
+import { setToken } from '@/utils/token';
 
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -39,7 +41,15 @@ const ActionIcons = () => {
 
   return (
     <>
-      <AlipayCircleOutlined key="AlipayCircleOutlined" className={langClassName} />
+      <AlipayCircleOutlined
+        key="AlipayCircleOutlined"
+        className={langClassName}
+        onClick={() => {
+          // sso();
+          window.location.href =
+            'https://cube.newlifex.com/Sso/Login/json?name=NewLife&source=front-end&redirect_uri=http%3A%2F%2Flocalhost%3A8123%2Fuser%2Flogin';
+        }}
+      />
       <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={langClassName} />
       <WeiboCircleOutlined key="WeiboCircleOutlined" className={langClassName} />
     </>
@@ -87,6 +97,8 @@ const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
+  let location = useLocation();
+  let token = location.hash.replace('#token=', '');
 
   const containerClassName = useEmotionCss(() => {
     return {
@@ -113,6 +125,21 @@ const Login: React.FC = () => {
       });
     }
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      // 存储 token
+      setToken(token);
+      const hide = message.loading('正在登录...');
+      await fetchUserInfo();
+      hide();
+      const urlParams = new URL(window.location.href).searchParams;
+      history.push(urlParams.get('redirect') || '/');
+    };
+    if (token) {
+      fetch();
+    }
+  }, [token]);
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {

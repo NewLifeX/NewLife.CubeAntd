@@ -152,4 +152,7 @@ export default defineConfig({
     strategy: 'normal',
   },
   requestRecord: {},
+  define: {
+    API_URL: '',
+  },
 });
