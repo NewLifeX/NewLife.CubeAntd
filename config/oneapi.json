@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Ant Design Pro",
+    "title": "NewLife Cube",
     "version": "1.0.0"
   },
   "servers": [
@@ -560,7 +560,9 @@
             "type": "string",
             "format": "any"
           },
-          "key": { "type": "string" },
+          "key": {
+            "type": "string"
+          },
           "read": {
             "type": "boolean"
           },

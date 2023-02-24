@@ -2,12 +2,6 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-interface ResponseStructure<T = any> {
-  data: T;
-  code: number;
-  message: string;
-}
-
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
   return request<ResponseStructure<API.UserInfo>>('/Admin/User/Info', {
@@ -84,6 +78,14 @@ export async function addRule(options?: { [key: string]: any }) {
 export async function removeRule(options?: { [key: string]: any }) {
   return request<Record<string, any>>('/api/rule', {
     method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+/** 查询菜单 GET /Admin/Index/GetMenuTree */
+export async function queryMenus(options?: { [key: string]: any }) {
+  return request<ResponseStructure<API.MenuInfo[]>>('/Admin/Index/GetMenuTree', {
+    method: 'GET',
     ...(options || {}),
   });
 }

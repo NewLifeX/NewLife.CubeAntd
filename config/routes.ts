@@ -52,6 +52,25 @@ export default [
     component: './TableList',
   },
   {
+    path: '/admin',
+    name: '系统管理',
+    icon: 'table',
+    routes: [
+      {
+        name: '角色',
+        icon: 'table',
+        path: '/admin/role',
+        component: './Admin/Role',
+      },
+      {
+        name: '审计日志',
+        icon: 'table',
+        path: '/admin/log',
+        component: './Admin/Log',
+      },
+    ],
+  },
+  {
     path: '/',
     redirect: '/welcome',
   },

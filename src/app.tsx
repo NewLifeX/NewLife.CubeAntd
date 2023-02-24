@@ -7,9 +7,10 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import { currentUser as queryCurrentUser, queryMenus } from './services/ant-design-pro/api';
 import React from 'react';
 import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDropdown';
+import { MenuDataItem } from '@umijs/route-utils';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
@@ -54,7 +55,6 @@ export async function getInitialState(): Promise<{
   const { location } = history;
   if (location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
-    console.log(currentUser);
     return {
       fetchUserInfo,
       currentUser,
@@ -67,6 +67,29 @@ export async function getInitialState(): Promise<{
   };
 }
 
+// 递归处理菜单
+const recursionMenu = (menu: API.MenuInfo[]): MenuDataItem[] => {
+  return menu.map((item) => {
+    if (item.children) {
+      return {
+        ...item,
+        path: item.url.toLowerCase(),
+        name: item.displayName,
+        icon: undefined,
+        hideInMenu: !item.visible,
+        children: recursionMenu(item.children),
+      };
+    }
+    return {
+      ...item,
+      icon: undefined,
+      path: item.url.toLowerCase(),
+      name: item.displayName,
+      hideInMenu: !item.visible,
+    };
+  });
+};
+
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
@@ -76,6 +99,13 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       title: <AvatarName />,
       render: (_, avatarChildren) => {
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
+      },
+    },
+    menu: {
+      locale: false,
+      request: async (): Promise<MenuDataItem[]> => {
+        const res = await queryMenus();
+        return recursionMenu(res.data || []);
       },
     },
     waterMarkProps: {

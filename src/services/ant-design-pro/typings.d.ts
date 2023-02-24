@@ -2,6 +2,20 @@
 /* eslint-disable */
 
 declare namespace API {
+  type MenuInfo = {
+    displayName: string;
+    icon: string;
+    id: number;
+    name: string;
+    newWindow: boolean;
+    parentID: number;
+    permissions: {
+      [key: int]: string;
+    };
+    url: string;
+    visible: boolean;
+    children: MenuInfo[];
+  };
   type UserInfo = {
     id: number;
     name: string;
