@@ -17,6 +17,9 @@ declare module 'mockjs';
 declare module 'react-fittext';
 declare module 'bizcharts-plugin-slider';
 
+/**
+ * GetColumns
+ */
 declare interface CubeColumn {
   tableName: string;
   id: number;
@@ -54,6 +57,7 @@ declare interface CubeColumn {
   updateTime: string;
   updateIP: string;
 }
+
 /**
  * Pager
  */

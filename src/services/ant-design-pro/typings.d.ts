@@ -140,4 +140,28 @@ declare namespace API {
     description?: string;
     type?: NoticeIconItemType;
   };
+
+  /** 扩展相关属性 */
+  type ExItem = {
+    ex1: number;
+    ex2: number;
+    ex3: number;
+    ex4?: string;
+    ex5?: string;
+    ex6?: string;
+  };
+  /** 创建相关属性 */
+  type CreateItem = {
+    createIP: string;
+    createTime: string;
+    createUser?: string;
+    createUserID: number;
+  };
+  /** 更新相关属性 */
+  type UpdateItem = {
+    updateIP: string;
+    updateTime: string;
+    updateUser?: string;
+    updateUserID: number;
+  };
 }

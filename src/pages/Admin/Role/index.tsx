@@ -1,11 +1,6 @@
 import { addRule, removeRule, updateRule } from '@/services/ant-design-pro/api';
 import { query, queryColumns } from './service';
-import {
-  PlusOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  FormOutlined,
-} from '@ant-design/icons';
+import { PlusOutlined, FormOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import {
   FooterToolbar,
@@ -21,6 +16,7 @@ import { Button, Drawer, message } from 'antd';
 import React, { useRef, useState, useEffect } from 'react';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
+import IconStatus from '@/components/IconStatus';
 
 /**
  * @en-US Add node
@@ -89,24 +85,6 @@ const handleRemove = async (selectedRows: API.RuleListItem[]) => {
   }
 };
 
-const getStatus = (flag: boolean) => {
-  return flag ? (
-    <CheckCircleOutlined
-      style={{
-        color: '#3bd27e',
-        fontSize: 14,
-      }}
-    />
-  ) : (
-    <CloseCircleOutlined
-      style={{
-        color: '#ff4d4f',
-        fontSize: 14,
-      }}
-    />
-  );
-};
-
 const TableList: React.FC = () => {
   /**
    * @en-US Pop-up window of new window
@@ -145,7 +123,7 @@ const TableList: React.FC = () => {
       hideInSearch: true,
       sorter: true,
       render(_, entity) {
-        return getStatus(entity.enable);
+        return <IconStatus status={entity.enable} />;
       },
     },
     {
@@ -156,7 +134,7 @@ const TableList: React.FC = () => {
       tooltip: '系统。用于业务系统开发使用，不受数据权限约束，禁止修改名称或删除',
       sorter: true,
       render(_, entity) {
-        return getStatus(entity.isSystem);
+        return <IconStatus status={entity.isSystem} />;
       },
     },
     {
@@ -250,21 +228,7 @@ const TableList: React.FC = () => {
               tooltip: d.description === d.displayName ? undefined : d.description,
               render(dom, entity) {
                 if (d.dataType === 'Boolean') {
-                  return entity[d.name] ? (
-                    <CheckCircleOutlined
-                      style={{
-                        color: '#3bd27e',
-                        fontSize: 14,
-                      }}
-                    />
-                  ) : (
-                    <CloseCircleOutlined
-                      style={{
-                        color: '#ff4d4f',
-                        fontSize: 14,
-                      }}
-                    />
-                  );
+                  return <IconStatus status={entity[d.name]} />;
                 }
                 return dom;
               },

@@ -1,10 +1,9 @@
+import { RequestData } from '@ant-design/pro-components';
 import { request } from '@umijs/max';
 import { SortOrder } from 'antd/es/table/interface';
-import { RequestData } from '@ant-design/pro-components';
 
-/** 查询列数据 */
 export async function queryColumns(): Promise<ResponseStructure<CubeColumn[]>> {
-  return request<ResponseStructure<CubeColumn[]>>('/Admin/Role/GetColumns', {
+  return request<ResponseStructure<CubeColumn[]>>('/Admin/Log/GetColumns', {
     method: 'GET',
   });
 }
@@ -19,12 +18,12 @@ export async function query(
     pageSize?: number;
     /** 关键字 */
     keyword?: string;
-    /** 更新日期 */
-    updateTimeRange?: string[];
+    /** 日期 */
+    dateRange?: string[];
   },
   sort: Record<string, SortOrder>,
   options?: { [key: string]: any },
-): Promise<RequestData<API.RoleListItem>> {
+): Promise<RequestData<API.LogListItem>> {
   let ext = {};
   if (params.keyword) {
     ext = {
@@ -38,20 +37,18 @@ export async function query(
       desc: sort[Object.keys(sort)[0]] === 'descend' ? 'True' : 'False',
     };
   }
-  if (params.updateTimeRange && params.updateTimeRange.length === 2) {
+  if (params.dateRange && params.dateRange.length === 2) {
     ext = {
       ...ext,
-      dtStart: params.updateTimeRange[0],
-      dtEnd: params.updateTimeRange[1],
+      dtStart: params.dateRange[0],
+      dtEnd: params.dateRange[1],
     };
   }
-  const res = await request<ResponseStructure<API.RoleListItem[]>>('/Admin/Role', {
+  const res = await request<ResponseStructure<API.LogListItem[]>>('/Admin/Log', {
     method: 'GET',
     params: {
       pageIndex: params.current,
       pageSize: params.pageSize,
-      limit: params.pageSize,
-      offset: (params.current || 1) - 1,
       ...ext,
     },
     ...(options || {}),
