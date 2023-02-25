@@ -17,7 +17,7 @@ import {
 } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
-import { Alert, message, Tabs } from 'antd';
+import { Alert, message, Tabs, Avatar } from 'antd';
 import Settings from '../../../../config/defaultSettings';
 import React, { useState, useEffect } from 'react';
 import { flushSync } from 'react-dom';
@@ -41,15 +41,17 @@ const ActionIcons = () => {
 
   return (
     <>
-      <AlipayCircleOutlined
-        key="AlipayCircleOutlined"
+      <Avatar
+        src={'https://newlifex.com/logo.png'}
         className={langClassName}
+        alt={'NewLife'}
         onClick={() => {
-          // sso();
-          window.location.href =
-            'https://cube.newlifex.com/Sso/Login/json?name=NewLife&source=front-end&redirect_uri=http%3A%2F%2Flocalhost%3A8123%2Fuser%2Flogin';
+          const redirectUri = encodeURIComponent(window.location.href);
+          const url = `${API_URL}/Sso/Login/json?name=NewLife&source=front-end&redirect_uri=${redirectUri}`;
+          window.location.href = url;
         }}
       />
+      <AlipayCircleOutlined key="AlipayCircleOutlined" className={langClassName} />
       <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={langClassName} />
       <WeiboCircleOutlined key="WeiboCircleOutlined" className={langClassName} />
     </>
