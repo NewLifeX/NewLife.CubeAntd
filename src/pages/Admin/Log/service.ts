@@ -8,6 +8,12 @@ export async function queryColumns(): Promise<ResponseStructure<CubeColumn[]>> {
   });
 }
 
+export async function detail(id: number): Promise<ResponseStructure<API.LogListItem>> {
+  const res = await request<ResponseStructure<API.LogListItem>>(`/Admin/Log/ExportExcel?id=${id}`);
+  console.log(res);
+  return res;
+}
+
 /** 查询数据 */
 export async function query(
   params: {

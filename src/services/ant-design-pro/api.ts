@@ -89,3 +89,11 @@ export async function queryMenus(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+/** 查询菜单 GET /Admin/Index/GetMenuTree */
+export async function queryIndex(options?: { [key: string]: any }) {
+  return request<ResponseStructure<any>>('/Admin/Cube', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

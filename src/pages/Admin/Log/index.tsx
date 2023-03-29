@@ -1,4 +1,4 @@
-import { query, queryColumns } from './service';
+import { query, queryColumns, detail } from './service';
 import { FormOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { PageContainer, ProDescriptions, ProTable } from '@ant-design/pro-components';
@@ -17,7 +17,7 @@ const TableList: React.FC = () => {
       title: '类型',
       dataIndex: 'category',
       hideInSearch: true,
-      width: 80,
+      width: 110,
     },
     {
       title: '操作',
@@ -66,13 +66,13 @@ const TableList: React.FC = () => {
     {
       title: 'IP地址',
       dataIndex: 'createIP',
-      width: 300,
+      width: 310,
       hideInSearch: true,
     },
     {
       title: '时间',
       dataIndex: 'createTime',
-      width: 160,
+      width: 170,
       hideInSearch: true,
       sorter: true,
     },
@@ -82,9 +82,19 @@ const TableList: React.FC = () => {
       valueType: 'option',
       fixed: 'right',
       width: 70,
-      render() {
+      render(_, entity) {
         return [
-          <Button key={'view'} shape="circle" type={'link'} icon={<FormOutlined />}>
+          <Button
+            key={'view'}
+            shape="circle"
+            type={'link'}
+            icon={<FormOutlined />}
+            onClick={() => {
+              setCurrentRow(entity);
+              setShowDetail(true);
+              detail(entity.id);
+            }}
+          >
             查看
           </Button>,
         ];
@@ -182,8 +192,8 @@ const TableList: React.FC = () => {
       >
         {currentRow?.id && (
           <ProDescriptions<API.LogListItem>
-            column={2}
-            title={currentRow?.id}
+            column={1}
+            title={currentRow?.category}
             request={async () => ({
               data: currentRow || {},
             })}
