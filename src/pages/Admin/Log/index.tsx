@@ -1,4 +1,4 @@
-import { query, queryColumns, detail } from './service';
+import { query, queryFields, detail } from './service';
 import { FormOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { PageContainer, ProDescriptions, ProTable } from '@ant-design/pro-components';
@@ -135,7 +135,7 @@ const TableList: React.FC = () => {
   useEffect(() => {
     const fetch = async () => {
       setColumnsLoading(false);
-      const res = await queryColumns();
+      const res = await queryFields();
       const data = res.data;
       setColumnsData(
         data

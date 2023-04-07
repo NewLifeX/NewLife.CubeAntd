@@ -47,7 +47,7 @@ const ActionIcons = () => {
         alt={'NewLife'}
         onClick={() => {
           const redirectUri = encodeURIComponent(window.location.href);
-          const url = `${API_URL}/Sso/Login/json?name=NewLife&source=front-end&redirect_uri=${redirectUri}`;
+          const url = `${API_URL}/Sso/Login?name=NewLife&source=front-end&redirect_uri=${redirectUri}`;
           window.location.href = url;
         }}
       />

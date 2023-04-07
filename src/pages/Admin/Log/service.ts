@@ -2,8 +2,8 @@ import { RequestData } from '@ant-design/pro-components';
 import { request } from '@umijs/max';
 import { SortOrder } from 'antd/es/table/interface';
 
-export async function queryColumns(): Promise<ResponseStructure<CubeColumn[]>> {
-  return request<ResponseStructure<CubeColumn[]>>('/Admin/Log/GetColumns', {
+export async function queryFields(): Promise<ResponseStructure<CubeColumn[]>> {
+  return request<ResponseStructure<CubeColumn[]>>('/Admin/Log/GetFields', {
     method: 'GET',
   });
 }
