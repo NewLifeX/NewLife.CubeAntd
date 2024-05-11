@@ -92,6 +92,7 @@ const Welcome: React.FC = () => {
       console.log(res);
       if (res.code === 0) {
         const data = res.data;
+        console.log(data);
         const segmenteds = Object.keys(data.properties).map((key) => key);
         setOptions(segmenteds);
         setCurrentValue(segmenteds[0]);

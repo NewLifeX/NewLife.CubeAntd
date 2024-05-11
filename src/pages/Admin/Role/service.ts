@@ -4,7 +4,7 @@ import { RequestData } from '@ant-design/pro-components';
 
 /** 查询列数据 */
 export async function queryColumns(): Promise<ResponseStructure<CubeColumn[]>> {
-  return request<ResponseStructure<CubeColumn[]>>('/Admin/Role/GetColumns', {
+  return request<ResponseStructure<CubeColumn[]>>('/Admin/Role/GetFields', {
     method: 'GET',
   });
 }

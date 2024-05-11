@@ -32,7 +32,7 @@ export async function getInitialState(): Promise<{
       const d = res.data;
       return {
         name: d.name,
-        avatar: `https://cube.newlifex.com${d.avatar}`,
+        avatar: `https://sso.newlifex.com${d.avatar}`,
         userid: d.id,
         email: d.mail,
         signature: d.remark,
